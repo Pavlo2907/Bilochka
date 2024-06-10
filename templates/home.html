@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Головна сторінка</title>
+</head>
+<body>
+    <h1>Головна сторінка</h1>
+    <h2>Предмети</h2>
+    <ul>
+        {% for subject in subjects %}
+            <li>{{ subject.name }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Викладачі</h2>
+    <ul>
+        {% for teacher in teachers %}
+            <li>{{ teacher.last_name }} {{ teacher.first_name }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Статистика</h2>
+    <p>Кількість класів: {{ num_classes }}</p>
+    <p>Кількість учнів: {{ num_students }}</p>
+</body>
+</html>
