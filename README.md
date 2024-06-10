@@ -59,6 +59,6 @@ Contributions are welcome! If you'd like to contribute to this project, please f
 
 # License
 
-This project is licensed under the [MIT License]().
+This project is licensed under the [MIT License](https://github.com/Pavlo2907/Bilochka/blob/master/LICENSE).
 
 
