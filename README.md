@@ -47,4 +47,17 @@ To run this project locally, follow these steps:
    python manage.py runserver
 3. Access the application:
    Open your web browser and go to http://127.0.0.1:8000/
+# Contributing
+
+Contributions are welcome! If you'd like to contribute to this project, please follow these guidelines:
+
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature-branch`).
+3. Make your changes and commit them (`git commit -am 'Add new feature'`).
+4. Push to the branch (`git push origin feature-branch`).
+5. Create a new Pull Request.
+
+# License
+
+This project is licensed under the MIT License.
 
