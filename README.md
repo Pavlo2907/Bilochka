@@ -42,4 +42,9 @@ To run this project locally, follow these steps:
 1. Clone the repository:
    ```bash
    git clone https://github.com/Pavlo2907/Bilochka.git
+2. Run the development server:
+   ```bash
+   python manage.py runserver
+3. Access the application:
+   Open your web browser and go to [Open your web browser](http://127.0.0.1:8000/)
 
