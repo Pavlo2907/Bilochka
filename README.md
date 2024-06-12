@@ -31,8 +31,7 @@ Bilochka is a web-based educational platform designed to streamline communicatio
 - Python
 - Django (Web framework)
 - HTML/CSS
-- JavaScript
-- PostgreSQL (Database)
+- SQLite (Database)
 - Git/GitHub (Version control and collaboration)
 
 ## Getting Started
