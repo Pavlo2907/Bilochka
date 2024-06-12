@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Головна сторінка</title>
-</head>
-<body>
-    <h1>Головна сторінка</h1>
+{% extends 'main/includes/header.html' %}
+{% block content %}
+<h1>Головна сторінка</h1>
     <h2>Предмети</h2>
     <ul>
         {% for subject in subjects %}
@@ -22,5 +18,4 @@
     <h2>Статистика</h2>
     <p>Кількість класів: {{ num_classes }}</p>
     <p>Кількість учнів: {{ num_students }}</p>
-</body>
-</html>
+{% endblock %}

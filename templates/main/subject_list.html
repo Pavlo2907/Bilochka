@@ -1,0 +1,24 @@
+<!-- templates/main/subject_list.html -->
+{% extends 'base.html' %}
+
+{% block title %}Предмети{% endblock %}
+
+{% block content %}
+<h1>Предмети</h1>
+<ul>
+    {% for subject in subjects %}
+        <li>{{ subject.name }}</li>
+    {% endfor %}
+</ul>
+
+<h2>Викладачі</h2>
+<ul>
+    {% for teacher in teachers %}
+        <li>{{ teacher.last_name }} {{ teacher.first_name }}</li>
+    {% endfor %}
+</ul>
+
+<h2>Статистика</h2>
+<p>Кількість класів: {{ num_classes }}</p>
+<p>Кількість учнів: {{ num_students }}</p>
+{% endblock %}
