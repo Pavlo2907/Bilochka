@@ -45,25 +45,23 @@ def home(request):
     }
 
     return render(request, 'main/home.html', context)
-
+from django.shortcuts import get_object_or_404
+from .models import Teacher
 @login_required
 def teacher_subjects(request):
-    teacher = get_object_or_404(Teacher, user=request.user)
-    return render(request, 'main/teacher_subjects.html', {'teacher': teacher})
-
-from django.shortcuts import render, get_object_or_404
-from .models import Teacher
-
-def teacher_subject_detail(request, id):
-    teacher = get_object_or_404(Teacher, id=id)
-    subjects = teacher.subjects.all()
-    return render(request, 'main/teacher_subjects.html', {'teacher': teacher, 'subjects': subjects})
+    #teacher = get_object_or_404(Teacher, user=request.user)
+    return render(request, 'main/teacher_subjects.html') #, {'teacher': teacher})
 
 
-@login_required
+
+
+from django.shortcuts import render
+from .models import Teacher  # Припустимо, що у вас є модель Teacher
+
 def teacher_list(request):
     teachers = Teacher.objects.all()
     return render(request, 'main/teacher_list.html', {'teachers': teachers})
+
 
 
 @login_required
@@ -140,15 +138,12 @@ def user_delete(request, user_id):
         return redirect('user_list')
     return render(request, 'main/user_confirm_delete.html', {'user': user})
 
-@login_required
+from django.shortcuts import render
+
 def statistics_view(request):
-    # Your logic here
+    
     return render(request, 'main/statistics.html')
 
-@login_required
-def teacher_subjects(request):
-    teacher = get_object_or_404(Teacher, user=request.user)
-    return render(request, 'main/teacher_subjects.html', {'teacher': teacher})
 
 @login_required
 def subject_create_view(request):

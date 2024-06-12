@@ -7,7 +7,9 @@
     <title>Teacher Subjects</title>
 </head>
 <body>
-    <h1>{{ teacher.name }}'s Subjects</h1>
+    <h1>Teacher name : {{ teacher.name }}</h1>
+    <h1>Teacher's Subjects :</h1>
+    <h2></h2>
     <ul>
         {% for subject in subjects %}
             <li>{{ subject.name }}</li>
