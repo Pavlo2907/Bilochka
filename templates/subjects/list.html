@@ -1,0 +1,9 @@
+{% extends "header.html" %}
+{% block content %}
+<h2>Перелік предметів</h2>
+<ul>
+    {% for subject in subjects %}
+    <li>{{ subject.name }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

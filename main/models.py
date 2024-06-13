@@ -1,5 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.db import models
+from django.contrib.auth.models import AbstractUser
+from django.utils import timezone
 
 class CustomUserManager(BaseUserManager):
     def create_superuser(self, username, email, password=None, **extra_fields):
@@ -22,15 +25,21 @@ class CustomUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-class User(AbstractUser):
-    USER_TYPE_CHOICES = (
-        (1, 'Teacher'),
-        (2, 'Chief-Teacher'),
-        (3, 'Student'),
-    )
-    user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=3)
+from django.contrib.auth.models import AbstractUser
+from django.db import models
 
-    objects = CustomUserManager()
+from django.contrib.auth.models import AbstractUser
+from django.db import models
+
+class User(AbstractUser):
+    ROLE_CHOICES = (
+        ('teacher', 'Teacher'),
+        ('chief_teacher', 'Chief Teacher'),
+        ('student', 'Student'),
+    )
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='student')
+    user_type = models.IntegerField(choices=((1, 'Teacher'), (2, 'Chief Teacher'), (3, 'Student')), default=3)
+
 
 class Subject(models.Model):
     name = models.CharField(max_length=255)
@@ -39,18 +48,31 @@ class Subject(models.Model):
     def __str__(self):
         return self.name
 
-class Class(models.Model):
+class Class(models.Model):  # Renamed from Class
     class_name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.class_name
 
+from django.db import models
+
+from django.db import models
+
+from django.db import models
+
+from django.db import models
+
 class Teacher(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    subjects = models.ManyToManyField(Subject, related_name='teachers')
+    first_name = models.CharField(max_length=50, default='')  # Added default value for first_name
+    last_name = models.CharField(max_length=50, default='')  # Added default value for last_name
+    email = models.EmailField(default='example@email.com')  # Example default value for email
+    # Add other fields if necessary
 
     def __str__(self):
-        return self.user.username
+        return f'{self.first_name} {self.last_name}'
+
+
+
 
 class StudentProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -69,10 +91,13 @@ class StudyMaterial(models.Model):
     def __str__(self):
         return self.title
 
+from django.db import models
+
 class Assignment(models.Model):
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name='assignments')
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
+    due_date = models.DateField(default=timezone.now)  # Added default value
 
     def __str__(self):
         return self.title
@@ -81,7 +106,9 @@ class Achievement(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='achievements')
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
+    date = models.DateField(default=timezone.now)  # Set default to current date
 
     def __str__(self):
         return self.title
+
 

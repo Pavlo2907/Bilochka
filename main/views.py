@@ -4,6 +4,8 @@ from django.contrib.auth.decorators import login_required
 from .forms import UserRegistrationForm, UserLoginForm, SubjectForm, UserForm, StudyMaterialForm, AssignmentForm, AchievementForm
 from .models import Subject, Teacher, Class, User, StudentProfile, StudyMaterial, Assignment, Achievement
 from django.contrib import messages
+from .forms import UserRegistrationForm, UserLoginForm, SubjectForm, UserForm, StudyMaterialForm, AssignmentForm, AchievementForm
+
 
 def register(request):
     if request.method == 'POST':
@@ -171,3 +173,58 @@ def achievement_create(request):
         form = AchievementForm()
     return render(request, 'main/achievement_form.html', {'form': form})
 
+from django.shortcuts import render
+from django.views.generic import ListView, CreateView
+from .models import Subject, Teacher, User, StudyMaterial, Assignment, Achievement
+from .forms import SubjectForm, TeacherForm, UserForm, StudyMaterialForm, AssignmentForm, AchievementForm
+
+class SubjectListView(ListView):
+    model = Subject
+    template_name = 'subjects/list.html'
+    context_object_name = 'subjects'
+
+class SubjectCreateView(CreateView):
+    model = Subject
+    form_class = SubjectForm
+    template_name = 'subjects/create.html'
+    success_url = '/subjects/'
+
+class TeacherListView(ListView):
+    model = Teacher
+    template_name = 'teachers/list.html'
+    context_object_name = 'teachers'
+
+class TeacherCreateView(CreateView):
+    model = Teacher
+    form_class = TeacherForm
+    template_name = 'teachers/create.html'
+    success_url = '/teachers/'
+
+class UserListView(ListView):
+    model = User
+    template_name = 'users/list.html'
+    context_object_name = 'users'
+
+class UserCreateView(CreateView):
+    model = User
+    form_class = UserForm
+    template_name = 'users/create.html'
+    success_url = '/users/'
+
+class StudyMaterialCreateView(CreateView):
+    model = StudyMaterial
+    form_class = StudyMaterialForm
+    template_name = 'study_materials/create.html'
+    success_url = '/study_materials/'
+
+class AssignmentCreateView(CreateView):
+    model = Assignment
+    form_class = AssignmentForm
+    template_name = 'assignments/create.html'
+    success_url = '/assignments/'
+
+class AchievementCreateView(CreateView):
+    model = Achievement
+    form_class = AchievementForm
+    template_name = 'achievements/create.html'
+    success_url = '/achievements/'

@@ -1,0 +1,9 @@
+{% extends "header.html" %}
+{% block content %}
+<h2>Додати матеріал</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Додати</button>
+</form>
+{% endblock %}
