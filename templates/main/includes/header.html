@@ -17,16 +17,60 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/">Головна</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/subjects/">Предмети</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="subjectsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Предмети
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="subjectsDropdown">
+                        <a class="dropdown-item" href="/subjects/">Перелік предметів</a>
+                        <a class="dropdown-item" href="/subjects/create/">Додати предмет</a>
+                    </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/teachers/">Викладачі</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="teachersDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Викладачі
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="teachersDropdown">
+                        <a class="dropdown-item" href="/teachers/">Перелік викладачів</a>
+                        <a class="dropdown-item" href="/teacher_subjects/">Предмети викладача</a>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/statistics/">Статистика</a>
                 </li>
-                <!-- Додайте посилання на інші сторінки тут -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="studyMaterialsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Матеріали
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="studyMaterialsDropdown">
+                        <a class="dropdown-item" href="/study_materials/create/">Додати матеріал</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="assignmentsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Завдання
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="assignmentsDropdown">
+                        <a class="dropdown-item" href="/assignments/create/">Додати завдання</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="achievementsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Досягнення
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="achievementsDropdown">
+                        <a class="dropdown-item" href="/achievements/create/">Додати досягнення</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="usersDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Користувачі
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="usersDropdown">
+                        <a class="dropdown-item" href="/users/">Перелік користувачів</a>
+                        <a class="dropdown-item" href="/users/create/">Додати користувача</a>
+                    </div>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/register/">Реєстрація</a>
                 </li>
@@ -36,13 +80,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/logout/">Вихід</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/teacher/subjects/">Предмети викладача</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/subjects/new/">Створити предмет</a>
-                </li>
-                <!-- Додайте інші посилання на сторінки тут -->
             </ul>
         </div>
     </nav>

@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
-from .forms import UserRegistrationForm, UserLoginForm, SubjectForm, UserForm
-from .models import Subject, Teacher, Class, User, StudentProfile
+from .forms import UserRegistrationForm, UserLoginForm, SubjectForm, UserForm, StudyMaterialForm, AssignmentForm, AchievementForm
+from .models import Subject, Teacher, Class, User, StudentProfile, StudyMaterial, Assignment, Achievement
 from django.contrib import messages
 
 def register(request):
@@ -45,24 +45,16 @@ def home(request):
     }
 
     return render(request, 'main/home.html', context)
-from django.shortcuts import get_object_or_404
-from .models import Teacher
+
 @login_required
 def teacher_subjects(request):
-    #teacher = get_object_or_404(Teacher, user=request.user)
-    return render(request, 'main/teacher_subjects.html') #, {'teacher': teacher})
+    teacher = get_object_or_404(Teacher, user=request.user)
+    return render(request, 'main/teacher_subjects.html', {'teacher': teacher})
 
-
-
-
-from django.shortcuts import render
-from .models import Teacher  # Припустимо, що у вас є модель Teacher
-
+@login_required
 def teacher_list(request):
-    teachers = Teacher.objects.all()
+    teachers = Teacher.objects.all().order_by('user__last_name')
     return render(request, 'main/teacher_list.html', {'teachers': teachers})
-
-
 
 @login_required
 def subject_create(request):
@@ -79,7 +71,6 @@ def subject_create(request):
 def subject_list(request):
     subjects = Subject.objects.all().order_by('name')
     return render(request, 'main/subject_list.html', {'subjects': subjects})
-
 
 @login_required
 def subject_update(request, pk):
@@ -138,21 +129,45 @@ def user_delete(request, user_id):
         return redirect('user_list')
     return render(request, 'main/user_confirm_delete.html', {'user': user})
 
-from django.shortcuts import render
-
+@login_required
 def statistics_view(request):
-    
     return render(request, 'main/statistics.html')
 
-
 @login_required
-def subject_create_view(request):
+def study_material_create(request):
     if request.method == 'POST':
-        form = SubjectForm(request.POST)
+        form = StudyMaterialForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('subject_list')
     else:
-        form = SubjectForm()
-    return render(request, 'main/subject_create.html', {'form': form})
+        form = StudyMaterialForm()
+    return render(request, 'main/study_material_form.html', {'form': form})
+
+@login_required
+def study_material_list(request, subject_id):
+    materials = StudyMaterial.objects.filter(subject_id=subject_id)
+    return render(request, 'main/study_material_list.html', {'materials': materials})
+
+@login_required
+def assignment_create(request):
+    if request.method == 'POST':
+        form = AssignmentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('subject_list')
+    else:
+        form = AssignmentForm()
+    return render(request, 'main/assignment_form.html', {'form': form})
+
+@login_required
+def achievement_create(request):
+    if request.method == 'POST':
+        form = AchievementForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = AchievementForm()
+    return render(request, 'main/achievement_form.html', {'form': form})
 

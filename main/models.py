@@ -54,7 +54,34 @@ class Teacher(models.Model):
 
 class StudentProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    subjects = models.ManyToManyField(Subject, related_name='students')
+    achievements = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return self.user.username
+
+class StudyMaterial(models.Model):
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name='materials')
+    title = models.CharField(max_length=255)
+    file = models.FileField(upload_to='study_materials/', blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.title
+
+class Assignment(models.Model):
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name='assignments')
+    title = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.title
+
+class Achievement(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='achievements')
+    title = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.title
 
