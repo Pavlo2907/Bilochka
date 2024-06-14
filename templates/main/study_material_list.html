@@ -1,10 +1,22 @@
-{% extends "base.html" %}
-
-{% block content %}
-  <h2>Study Materials</h2>
-  <ul>
-    {% for material in materials %}
-      <li>{{ material.title }} - <a href="{{ material.file.url }}">Download</a></li>
-    {% endfor %}
-  </ul>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Study Materials</title>
+</head>
+<body>
+    <h2>Study Materials</h2>
+    <ul>
+        {% for material in materials %}
+            <li>
+                {{ material.title }}
+                {% if material.file %}
+                    - <a href="{{ material.file.url }}">Download</a>
+                {% else %}
+                    - No file available
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

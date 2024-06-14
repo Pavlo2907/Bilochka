@@ -37,10 +37,14 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ['username', 'email', 'role']
 
+from django import forms
+from .models import StudyMaterial, Subject
+
 class StudyMaterialForm(forms.ModelForm):
     class Meta:
         model = StudyMaterial
-        fields = ['title', 'description', 'file']
+        fields = ['title', 'description', 'file', 'subject']  # include 'subject' here
+
 
 class AssignmentForm(forms.ModelForm):
     class Meta:

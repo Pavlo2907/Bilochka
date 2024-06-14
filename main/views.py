@@ -1,11 +1,11 @@
+# views.py
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
-from .forms import UserRegistrationForm, UserLoginForm, SubjectForm, UserForm, StudyMaterialForm, AssignmentForm, AchievementForm
-from .models import Subject, Teacher, Class, User, StudentProfile, StudyMaterial, Assignment, Achievement
 from django.contrib import messages
 from .forms import UserRegistrationForm, UserLoginForm, SubjectForm, UserForm, StudyMaterialForm, AssignmentForm, AchievementForm
-
+from .models import Subject, Teacher, Class, User, StudentProfile, StudyMaterial, Assignment, Achievement
 
 def register(request):
     if request.method == 'POST':
@@ -49,13 +49,8 @@ def home(request):
     return render(request, 'main/home.html', context)
 
 @login_required
-def teacher_subjects(request):
-    teacher = get_object_or_404(Teacher, user=request.user)
-    return render(request, 'main/teacher_subjects.html', {'teacher': teacher})
-
-@login_required
 def teacher_list(request):
-    teachers = Teacher.objects.all().order_by('user__last_name')
+    teachers = Teacher.objects.all().order_by('last_name')
     return render(request, 'main/teacher_list.html', {'teachers': teachers})
 
 @login_required
@@ -123,17 +118,23 @@ def user_update(request, pk):
     return render(request, 'main/user_form.html', {'form': form})
 
 @login_required
-def user_delete(request, user_id):
-    user = get_object_or_404(User, id=user_id)
+def user_delete(request, pk):
+    user = get_object_or_404(User, pk=pk)
     if request.method == 'POST':
         user.delete()
-        messages.success(request, 'User deleted successfully.')
         return redirect('user_list')
     return render(request, 'main/user_confirm_delete.html', {'user': user})
 
 @login_required
 def statistics_view(request):
+    # Implement statistics logic
     return render(request, 'main/statistics.html')
+
+@login_required
+def study_material_list(request):
+    materials = StudyMaterial.objects.all()
+    return render(request, 'main/study_material_list.html', {'materials': materials})
+
 
 @login_required
 def study_material_create(request):
@@ -141,15 +142,36 @@ def study_material_create(request):
         form = StudyMaterialForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('subject_list')
+            return redirect('study_material_list')
     else:
         form = StudyMaterialForm()
     return render(request, 'main/study_material_form.html', {'form': form})
 
+
 @login_required
-def study_material_list(request, subject_id):
-    materials = StudyMaterial.objects.filter(subject_id=subject_id)
-    return render(request, 'main/study_material_list.html', {'materials': materials})
+def study_material_update(request, pk):
+    material = get_object_or_404(StudyMaterial, pk=pk)
+    if request.method == 'POST':
+        form = StudyMaterialForm(request.POST, request.FILES, instance=material)
+        if form.is_valid():
+            form.save()
+            return redirect('study_material_list')
+    else:
+        form = StudyMaterialForm(instance=material)
+    return render(request, 'main/study_material_form.html', {'form': form})
+
+@login_required
+def study_material_delete(request, pk):
+    material = get_object_or_404(StudyMaterial, pk=pk)
+    if request.method == 'POST':
+        material.delete()
+        return redirect('study_material_list')
+    return render(request, 'main/study_material_confirm_delete.html', {'material': material})
+
+@login_required
+def assignment_list(request):
+    assignments = Assignment.objects.all().order_by('title')
+    return render(request, 'main/assignment_list.html', {'assignments': assignments})
 
 @login_required
 def assignment_create(request):
@@ -157,10 +179,35 @@ def assignment_create(request):
         form = AssignmentForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('subject_list')
+            return redirect('assignment_list')
     else:
         form = AssignmentForm()
     return render(request, 'main/assignment_form.html', {'form': form})
+
+@login_required
+def assignment_update(request, pk):
+    assignment = get_object_or_404(Assignment, pk=pk)
+    if request.method == 'POST':
+        form = AssignmentForm(request.POST, instance=assignment)
+        if form.is_valid():
+            form.save()
+            return redirect('assignment_list')
+    else:
+        form = AssignmentForm(instance=assignment)
+    return render(request, 'main/assignment_form.html', {'form': form})
+
+@login_required
+def assignment_delete(request, pk):
+    assignment = get_object_or_404(Assignment, pk=pk)
+    if request.method == 'POST':
+        assignment.delete()
+        return redirect('assignment_list')
+    return render(request, 'main/assignment_confirm_delete.html', {'assignment': assignment})
+
+@login_required
+def achievement_list(request):
+    achievements = Achievement.objects.all().order_by('title')
+    return render(request, 'main/achievement_list.html', {'achievements': achievements})
 
 @login_required
 def achievement_create(request):
@@ -168,63 +215,41 @@ def achievement_create(request):
         form = AchievementForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('home')
+            return redirect('achievement_list')
     else:
         form = AchievementForm()
     return render(request, 'main/achievement_form.html', {'form': form})
 
-from django.shortcuts import render
-from django.views.generic import ListView, CreateView
-from .models import Subject, Teacher, User, StudyMaterial, Assignment, Achievement
-from .forms import SubjectForm, TeacherForm, UserForm, StudyMaterialForm, AssignmentForm, AchievementForm
+@login_required
+def achievement_update(request, pk):
+    achievement = get_object_or_404(Achievement, pk=pk)
+    if request.method == 'POST':
+        form = AchievementForm(request.POST, instance=achievement)
+        if form.is_valid():
+            form.save()
+            return redirect('achievement_list')
+    else:
+        form = AchievementForm(instance=achievement)
+    return render(request, 'main/achievement_form.html', {'form': form})
 
-class SubjectListView(ListView):
-    model = Subject
-    template_name = 'subjects/list.html'
-    context_object_name = 'subjects'
+@login_required
+def achievement_delete(request, pk):
+    achievement = get_object_or_404(Achievement, pk=pk)
+    if request.method == 'POST':
+        achievement.delete()
+        return redirect('achievement_list')
+    return render(request, 'main/achievement_confirm_delete.html', {'achievement': achievement})
 
-class SubjectCreateView(CreateView):
-    model = Subject
-    form_class = SubjectForm
-    template_name = 'subjects/create.html'
-    success_url = '/subjects/'
+@login_required
+def profile(request):
+    return render(request, 'main/profile.html')
 
-class TeacherListView(ListView):
-    model = Teacher
-    template_name = 'teachers/list.html'
-    context_object_name = 'teachers'
+@login_required
+def profile_update(request):
+    # Implement profile update logic
+    return render(request, 'main/profile_update.html')
 
-class TeacherCreateView(CreateView):
-    model = Teacher
-    form_class = TeacherForm
-    template_name = 'teachers/create.html'
-    success_url = '/teachers/'
-
-class UserListView(ListView):
-    model = User
-    template_name = 'users/list.html'
-    context_object_name = 'users'
-
-class UserCreateView(CreateView):
-    model = User
-    form_class = UserForm
-    template_name = 'users/create.html'
-    success_url = '/users/'
-
-class StudyMaterialCreateView(CreateView):
-    model = StudyMaterial
-    form_class = StudyMaterialForm
-    template_name = 'study_materials/create.html'
-    success_url = '/study_materials/'
-
-class AssignmentCreateView(CreateView):
-    model = Assignment
-    form_class = AssignmentForm
-    template_name = 'assignments/create.html'
-    success_url = '/assignments/'
-
-class AchievementCreateView(CreateView):
-    model = Achievement
-    form_class = AchievementForm
-    template_name = 'achievements/create.html'
-    success_url = '/achievements/'
+@login_required
+def profile_delete(request):
+    # Implement profile delete logic
+    return render(request, 'main/profile_delete.html')

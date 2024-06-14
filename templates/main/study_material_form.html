@@ -1,10 +1,15 @@
-{% extends "base.html" %}
-
-{% block content %}
-  <h2>Add Study Material</h2>
-  <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save</button>
-  </form>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Study Material</title>
+</head>
+<body>
+    <h1>Create Study Material</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+    </form>
+</body>
+</html>

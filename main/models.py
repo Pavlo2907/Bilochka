@@ -1,7 +1,7 @@
+# models.py
+
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
-from django.db import models
-from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
 
 class CustomUserManager(BaseUserManager):
@@ -25,12 +25,6 @@ class CustomUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-from django.contrib.auth.models import AbstractUser
-from django.db import models
-
-from django.contrib.auth.models import AbstractUser
-from django.db import models
-
 class User(AbstractUser):
     ROLE_CHOICES = (
         ('teacher', 'Teacher'),
@@ -39,7 +33,7 @@ class User(AbstractUser):
     )
     role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='student')
     user_type = models.IntegerField(choices=((1, 'Teacher'), (2, 'Chief Teacher'), (3, 'Student')), default=3)
-
+    objects = CustomUserManager()
 
 class Subject(models.Model):
     name = models.CharField(max_length=255)
@@ -54,14 +48,6 @@ class Class(models.Model):  # Renamed from Class
     def __str__(self):
         return self.class_name
 
-from django.db import models
-
-from django.db import models
-
-from django.db import models
-
-from django.db import models
-
 class Teacher(models.Model):
     first_name = models.CharField(max_length=50, default='')  # Added default value for first_name
     last_name = models.CharField(max_length=50, default='')  # Added default value for last_name
@@ -70,9 +56,6 @@ class Teacher(models.Model):
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
-
-
-
 
 class StudentProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -90,8 +73,6 @@ class StudyMaterial(models.Model):
 
     def __str__(self):
         return self.title
-
-from django.db import models
 
 class Assignment(models.Model):
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name='assignments')
