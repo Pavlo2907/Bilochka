@@ -1,11 +1,13 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import Group
-from .models import User, Subject, Class, StudentProfile, Teacher, Grade, Schedule, Achievement, Assignment, StudyMaterial
+from .models import (
+    User, Subject, Class, StudentProfile,
+    Teacher, Grade, Schedule, Achievement,
+    Assignment, StudyMaterial
+)
 
-# Створюємо клас UserAdmin
 class UserAdmin(BaseUserAdmin):
-    # Поля, які будуть відображатися в адмінці
     list_display = ('email', 'first_name', 'last_name', 'role', 'is_staff')
     list_filter = ('is_staff', 'is_superuser', 'is_active', 'role')
     fieldsets = (
@@ -24,19 +26,15 @@ class UserAdmin(BaseUserAdmin):
     ordering = ('email',)
     filter_horizontal = ('groups', 'user_permissions',)
 
-# Реєструємо нашу модель та наш UserAdmin клас
 admin.site.register(User, UserAdmin)
-
-# Реєструємо інші моделі
 admin.site.register(Subject)
 admin.site.register(Class)
 admin.site.register(StudentProfile)
 admin.site.register(Teacher)
-
-# Видаляємо стандартну групу
-admin.site.unregister(Group)
 admin.site.register(Achievement)
 admin.site.register(Assignment)
 admin.site.register(StudyMaterial)
 admin.site.register(Grade)
 admin.site.register(Schedule)
+
+admin.site.unregister(Group)

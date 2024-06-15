@@ -1,9 +1,0 @@
-{% extends "header.html" %}
-{% block content %}
-<h2>Перелік викладачів</h2>
-<ul>
-    {% for teacher in teachers %}
-    <li>{{ teacher.last_name }}, {{ teacher.first_name }}</li>
-    {% endfor %}
-</ul>
-{% endblock %}

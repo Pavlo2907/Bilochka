@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.utils import timezone
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 class CustomUserManager(BaseUserManager):
     def create_superuser(self, username, email, password=None, **extra_fields):
@@ -40,18 +41,15 @@ class Subject(models.Model):
     def __str__(self):
         return self.name
 
-class Class(models.Model):  # Renamed from Class
+class Class(models.Model):
     class_name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.class_name
 
 class Teacher(models.Model):
-    # first_name = models.CharField(max_length=50, default='')  # Added default value for first_name
-    # last_name = models.CharField(max_length=50, default='')  # Added default value for last_name
     username = models.CharField(max_length=50, default='Teacher')
-    email = models.EmailField(default='example@email.com')  # Example default value for email
-    # Add other fields if necessary
+    email = models.EmailField(default='example@email.com')
 
     def __str__(self):
         return f'{self.username}'
@@ -60,15 +58,13 @@ class StudentProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     subjects = models.ManyToManyField(Subject, related_name='students')
     achievements = models.TextField(blank=True, null=True)
+
     def calculate_average_grade(self):
-        # Отримайте всі оцінки учня
         all_grades = self.grades.all()
-        # Перевірте, чи є оцінки для розрахунку середньої
         if all_grades.exists():
-            # Розрахунок середньої оцінки
             total_grades = sum([grade.grade for grade in all_grades])
             average_grade = total_grades / all_grades.count()
-            return round(average_grade, 2)  # Округлення до двох знаків після коми
+            return round(average_grade, 2)
         else:
             return None
 
@@ -88,7 +84,7 @@ class Assignment(models.Model):
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name='assignments')
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
-    due_date = models.DateField(default=timezone.now)  # Added default value
+    due_date = models.DateField(default=timezone.now)
 
     def __str__(self):
         return self.title
@@ -97,14 +93,10 @@ class Achievement(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='achievements')
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
-    date = models.DateField(default=timezone.now)  # Set default to current date
+    date = models.DateField(default=timezone.now)
 
     def __str__(self):
         return self.title
-
-from django.db import models
-from django.utils import timezone
-from django.core.validators import MinValueValidator, MaxValueValidator
 
 class Grade(models.Model):
     student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE, related_name='grades')
@@ -114,7 +106,6 @@ class Grade(models.Model):
 
     def __str__(self):
         return f'{self.student.user.username} - {self.subject.name} - {self.grade}'
-
 
 class Schedule(models.Model):
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)

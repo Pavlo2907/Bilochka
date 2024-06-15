@@ -1,21 +1,19 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from .models import User, Subject, StudyMaterial, Assignment, Teacher, Grade, Schedule
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from .models import (
+    User, Subject, StudyMaterial, Assignment,
+    Teacher, Grade, Schedule, Achievement
+)
 
 class UserRegistrationForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ['username', 'email', 'user_type']
-
-from django import forms
-from django.contrib.auth.forms import AuthenticationForm
+        fields = ['username', 'email', 'role']
 
 class UserLoginForm(AuthenticationForm):
     class Meta:
         model = User
         fields = ['username', 'password']
-from django import forms
-from .models import Achievement
 
 class AchievementForm(forms.ModelForm):
     class Meta:
@@ -32,19 +30,10 @@ class TeacherForm(forms.ModelForm):
         model = Teacher
         fields = ['username', 'email']
 
-class UserForm(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = ['username', 'email', 'role']
-
-from django import forms
-from .models import StudyMaterial, Subject
-
 class StudyMaterialForm(forms.ModelForm):
     class Meta:
         model = StudyMaterial
-        fields = ['title', 'description', 'file', 'subject']  # include 'subject' here
-
+        fields = ['title', 'description', 'file', 'subject']
 
 class AssignmentForm(forms.ModelForm):
     class Meta:
@@ -56,10 +45,8 @@ class GradeForm(forms.ModelForm):
         model = Grade
         fields = ['student', 'subject', 'grade', 'date']
 
-from django import forms
-from .models import Schedule
-
 class ScheduleForm(forms.ModelForm):
     class Meta:
         model = Schedule
         fields = ['subject', 'teacher', 'start_time', 'end_time']
+

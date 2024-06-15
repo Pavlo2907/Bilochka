@@ -220,7 +220,7 @@ def achievement_list(request):
     achievements = Achievement.objects.all().order_by('title')
     return render(request, 'main/achievement_list.html', {'achievements': achievements})
 
-# views.py
+
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
@@ -268,12 +268,10 @@ def profile(request):
 
 @login_required
 def profile_update(request):
-    # Implement profile update logic
     return render(request, 'main/profile_update.html')
 
 @login_required
 def profile_delete(request):
-    # Implement profile delete logic
     return render(request, 'main/profile_delete.html')
 
 @login_required
