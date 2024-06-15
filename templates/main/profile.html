@@ -11,6 +11,7 @@
         <h2>Профіль</h2>
         <p>Ім'я: {{ user.username }}</p>
         <p>Email: {{ user.email }}</p>
+        <p>Середня оцінка:{{ average_grade }}</p>
         <a href="{% url 'profile_update' %}" class="btn btn-primary">Редагувати</a>
         <a href="{% url 'profile_delete' %}" class="btn btn-danger">Видалити</a>
     </div>

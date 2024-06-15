@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Grade</title>
+</head>
+<body>
+    <h1>Create a New Grade</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save Grade</button>
+    </form>
+</body>
+</html>

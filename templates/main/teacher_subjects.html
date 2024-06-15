@@ -5,15 +5,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teacher Subjects</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <h1>Teacher name : {{ teacher.name }}</h1>
-    <h1>Teacher's Subjects :</h1>
-    <h2></h2>
+    {% for teacher in teachers %}
+    <h2>Teacher name : {{ teacher.username }}</h2>
+
+    <h2>Teacher's Subjects :</h2>
+    <br>
     <ul>
         {% for subject in subjects %}
-            <li>{{ subject.name }}</li>
+        <li>{{ subject.name }}</li>
         {% endfor %}
+        <br>
     </ul>
+    {% endfor %}
 </body>
 </html>

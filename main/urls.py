@@ -9,6 +9,7 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('', views.home, name='home'),
     path('teachers/', views.teacher_list, name='teacher_list'),
+    path('teacher/subjects/', views.teacher_subject, name='teacher_subjects'),
     path('subjects/', views.subject_list, name='subject_list'),
     path('subjects/create/', views.subject_create, name='subject_create'),
     path('subjects/<int:pk>/update/', views.subject_update, name='subject_update'),
@@ -33,6 +34,10 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
     path('profile/update/', views.profile_update, name='profile_update'),
     path('profile/delete/', views.profile_delete, name='profile_delete'),
+    path('grades/', views.grade_list, name='grade_list'),
+    path('grades/create/', views.grade_create, name='grade_create'),
+    path('schedules/', views.schedule_list, name='schedule_list'),
+    path('schedules/create/', views.schedule_create, name='schedule_create'),
 ]
 
 

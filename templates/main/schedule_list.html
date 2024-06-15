@@ -1,0 +1,22 @@
+<!-- achievement_list.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule List</title>
+</head>
+<body>
+    <h1>Schedule List</h1>
+    <ul>
+        {% for Schedule in schedules %}
+            <!-- <li>{{ Schedule }}</li> -->
+            <li>Subject: {{ Schedule.subject }}</li>
+            <li>Teacher: {{ Schedule.teacher }}</li>
+            <li>Start time: {{ Schedule.start_time }}</li>
+            <li>End time: {{ Schedule.end_time }}</li>
+            <br>
+        {% endfor %}
+    </ul>
+</body>
+</html>

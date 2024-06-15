@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import User, Subject, StudyMaterial, Assignment, Teacher
+from .models import User, Subject, StudyMaterial, Assignment, Teacher, Grade, Schedule
 
 class UserRegistrationForm(UserCreationForm):
     class Meta:
@@ -30,7 +30,7 @@ class SubjectForm(forms.ModelForm):
 class TeacherForm(forms.ModelForm):
     class Meta:
         model = Teacher
-        fields = ['first_name', 'last_name', 'email']
+        fields = ['username', 'email']
 
 class UserForm(forms.ModelForm):
     class Meta:
@@ -50,3 +50,16 @@ class AssignmentForm(forms.ModelForm):
     class Meta:
         model = Assignment
         fields = ['subject', 'title', 'description']
+
+class GradeForm(forms.ModelForm):
+    class Meta:
+        model = Grade
+        fields = ['student', 'subject', 'grade', 'date']
+
+from django import forms
+from .models import Schedule
+
+class ScheduleForm(forms.ModelForm):
+    class Meta:
+        model = Schedule
+        fields = ['subject', 'teacher', 'start_time', 'end_time']

@@ -1,5 +1,3 @@
-# models.py
-
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.utils import timezone
@@ -49,18 +47,30 @@ class Class(models.Model):  # Renamed from Class
         return self.class_name
 
 class Teacher(models.Model):
-    first_name = models.CharField(max_length=50, default='')  # Added default value for first_name
-    last_name = models.CharField(max_length=50, default='')  # Added default value for last_name
+    # first_name = models.CharField(max_length=50, default='')  # Added default value for first_name
+    # last_name = models.CharField(max_length=50, default='')  # Added default value for last_name
+    username = models.CharField(max_length=50, default='Teacher')
     email = models.EmailField(default='example@email.com')  # Example default value for email
     # Add other fields if necessary
 
     def __str__(self):
-        return f'{self.first_name} {self.last_name}'
+        return f'{self.username}'
 
 class StudentProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     subjects = models.ManyToManyField(Subject, related_name='students')
     achievements = models.TextField(blank=True, null=True)
+    def calculate_average_grade(self):
+        # Отримайте всі оцінки учня
+        all_grades = self.grades.all()
+        # Перевірте, чи є оцінки для розрахунку середньої
+        if all_grades.exists():
+            # Розрахунок середньої оцінки
+            total_grades = sum([grade.grade for grade in all_grades])
+            average_grade = total_grades / all_grades.count()
+            return round(average_grade, 2)  # Округлення до двох знаків після коми
+        else:
+            return None
 
     def __str__(self):
         return self.user.username
@@ -92,4 +102,25 @@ class Achievement(models.Model):
     def __str__(self):
         return self.title
 
+from django.db import models
+from django.utils import timezone
+from django.core.validators import MinValueValidator, MaxValueValidator
 
+class Grade(models.Model):
+    student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE, related_name='grades')
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name='grades')
+    grade = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(12)])
+    date = models.DateField(default=timezone.now)
+
+    def __str__(self):
+        return f'{self.student.user.username} - {self.subject.name} - {self.grade}'
+
+
+class Schedule(models.Model):
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    teacher = models.ForeignKey(User, on_delete=models.CASCADE)
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
+
+    def __str__(self):
+        return f"{self.subject} - {self.teacher} - {self.start_time} to {self.end_time}"

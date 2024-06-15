@@ -4,8 +4,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .forms import UserRegistrationForm, UserLoginForm, SubjectForm, UserForm, StudyMaterialForm, AssignmentForm, AchievementForm
-from .models import Subject, Teacher, Class, User, StudentProfile, StudyMaterial, Assignment, Achievement
+from .forms import UserRegistrationForm, UserLoginForm, SubjectForm, UserForm, StudyMaterialForm, GradeForm, ScheduleForm, AssignmentForm, AchievementForm
+from .models import Subject, Teacher, Class, User, StudentProfile, StudyMaterial,Grade, Schedule, Assignment, Achievement
 
 def register(request):
     if request.method == 'POST':
@@ -50,8 +50,15 @@ def home(request):
 
 @login_required
 def teacher_list(request):
-    teachers = Teacher.objects.all().order_by('last_name')
+    teachers = Teacher.objects.all()
     return render(request, 'main/teacher_list.html', {'teachers': teachers})
+
+@login_required
+def teacher_subject(request):
+    teachers = Teacher.objects.all()
+    subjects = Subject.objects.all()
+
+    return render(request, 'main/teacher_subjects.html', {'teachers': teachers, 'subjects':subjects})
 
 @login_required
 def subject_create(request):
@@ -66,8 +73,11 @@ def subject_create(request):
 
 @login_required
 def subject_list(request):
-    subjects = Subject.objects.all().order_by('name')
-    return render(request, 'main/subject_list.html', {'subjects': subjects})
+    subjects = Subject.objects.all()
+    teachers = Teacher.objects.all()
+    num_classes = Class.objects.count()
+    num_students = StudentProfile.objects.count()
+    return render(request, 'main/subject_list.html', {'subjects': subjects, 'teachers': teachers, 'num_classes': num_classes, 'num_students': num_students})
 
 @login_required
 def subject_update(request, pk):
@@ -124,11 +134,12 @@ def user_delete(request, pk):
         user.delete()
         return redirect('user_list')
     return render(request, 'main/user_confirm_delete.html', {'user': user})
-
 @login_required
 def statistics_view(request):
-    # Implement statistics logic
-    return render(request, 'main/statistics.html')
+    num_subjects = len(Subject.objects.all())
+    num_classes = len(Class.objects.all())
+    num_teachers = len(Teacher.objects.all())
+    return render(request, 'main/statistics.html', {'num_subjects': num_subjects, 'num_classes': num_classes, 'num_teachers': num_teachers})
 
 @login_required
 def study_material_list(request):
@@ -252,7 +263,8 @@ def achievement_delete(request, pk):
 
 @login_required
 def profile(request):
-    return render(request, 'main/profile.html')
+    average_grade = StudentProfile.calculate_average_grade
+    return render(request, 'main/profile.html', {'average_grade': average_grade})
 
 @login_required
 def profile_update(request):
@@ -263,3 +275,35 @@ def profile_update(request):
 def profile_delete(request):
     # Implement profile delete logic
     return render(request, 'main/profile_delete.html')
+
+@login_required
+def grade_create(request):
+    if request.method == 'POST':
+        form = GradeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('grade_list')
+    else:
+        form = GradeForm()
+    return render(request, 'main/grade_form.html', {'form': form})
+
+@login_required
+def grade_list(request):
+    grades = Grade.objects.all().order_by('subject__name')
+    return render(request, 'main/grade_list.html', {'grades': grades})
+
+@login_required
+def schedule_create(request):
+    if request.method == 'POST':
+        form = ScheduleForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('schedule_list')
+    else:
+        form = ScheduleForm()
+    return render(request, 'main/schedule_form.html', {'form': form})
+
+@login_required
+def schedule_list(request):
+    schedules = Schedule.objects.all().order_by('start_time')
+    return render(request, 'main/schedule_list.html', {'schedules': schedules})

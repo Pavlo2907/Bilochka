@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import Group
-from .models import User, Subject, Class, StudentProfile, Teacher, Achievement, Assignment, StudyMaterial
+from .models import User, Subject, Class, StudentProfile, Teacher, Grade, Schedule, Achievement, Assignment, StudyMaterial
 
 # Створюємо клас UserAdmin
 class UserAdmin(BaseUserAdmin):
@@ -38,3 +38,5 @@ admin.site.unregister(Group)
 admin.site.register(Achievement)
 admin.site.register(Assignment)
 admin.site.register(StudyMaterial)
+admin.site.register(Grade)
+admin.site.register(Schedule)

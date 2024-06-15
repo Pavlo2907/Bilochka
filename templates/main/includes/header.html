@@ -32,7 +32,7 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="teachersDropdown">
                         <a class="dropdown-item" href="/teachers/">Перелік викладачів</a>
-                        
+                        <a class="dropdown-item" href="/teacher/subjects/">Предмети викладачів</a>
                     </div>
                 </li>
                 <li class="nav-item">
@@ -40,48 +40,42 @@
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="studyMaterialsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Матеріали
+                        Матеріали та Завдання
                     </a>
                     <div class="dropdown-menu" aria-labelledby="studyMaterialsDropdown">
-                        <a class="dropdown-item" href="/study-materials/">Перелік матеріалів</a>
-                        <a class="dropdown-item" href="/study-materials/create/">Додати матеріал</a>
-                    </div>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="assignmentsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Завдання
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="assignmentsDropdown">
-                        <a class="dropdown-item" href="/assignments/">Перелік завдань</a>
+                        <a class="dropdown-item" href="/study-materials/">Матеріали</a>
+                        <a class="dropdown-item" href="/assignments/">Завдання</a>
                         <a class="dropdown-item" href="/assignments/create/">Додати завдання</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="achievementsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Досягнення
+                    <a class="nav-link dropdown-toggle" href="#" id="usersDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Користувачі та Профіль
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="achievementsDropdown">
-                        <a class="dropdown-item" href="/achievements/">Перелік досягнень</a>
-                        <a class="dropdown-item" href="/achievements/create/">Додати досягнення</a>
+                    <div class="dropdown-menu" aria-labelledby="usersDropdown">
+                        <a class="dropdown-item" href="/users/">Користувачі</a>
+                        <a class="dropdown-item" href="/users/create/">Додати користувача</a>
+                        <a class="dropdown-item" href="/profile/">Профіль</a>
+                        <a class="dropdown-item" href="/profile/update/">Оновити профіль</a>
+                        <a class="dropdown-item" href="/profile/delete/">Видалити профіль</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="usersDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Користувачі
+                    <a class="nav-link dropdown-toggle" href="#" id="gradesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Оцінки та Розклад
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="usersDropdown">
-                        <a class="dropdown-item" href="/users/">Перелік користувачів</a>
-                        <a class="dropdown-item" href="/users/create/">Додати користувача</a>
+                    <div class="dropdown-menu" aria-labelledby="gradesDropdown">
+                        <a class="dropdown-item" href="/grades/">Оцінки</a>
+                        <a class="dropdown-item" href="/grades/create/">Додати оцінку</a>
+                        <a class="dropdown-item" href="/schedules/">Розклад</a>
+                        <a class="dropdown-item" href="/schedules/create/">Створити розклад</a>
                     </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/profile/">Профіль</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/register/">Реєстрація</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/login/">Логін
+                    <a class="nav-link" href="/login/">Логін</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/logout/">Вихід</a>
@@ -99,3 +93,5 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+
+
