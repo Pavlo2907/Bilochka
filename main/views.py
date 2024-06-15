@@ -209,16 +209,26 @@ def achievement_list(request):
     achievements = Achievement.objects.all().order_by('title')
     return render(request, 'main/achievement_list.html', {'achievements': achievements})
 
+# views.py
+
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from .forms import AchievementForm
+from .models import Achievement
+
 @login_required
 def achievement_create(request):
     if request.method == 'POST':
         form = AchievementForm(request.POST)
         if form.is_valid():
-            form.save()
+            achievement = form.save(commit=False)
+            achievement.user = request.user  # Assign the current logged-in user
+            achievement.save()
             return redirect('achievement_list')
     else:
         form = AchievementForm()
     return render(request, 'main/achievement_form.html', {'form': form})
+
 
 @login_required
 def achievement_update(request, pk):
